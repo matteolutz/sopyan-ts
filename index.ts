@@ -95,7 +95,7 @@ client.on("message", (message: Discord.Message): void => {
 
     const prefix: string = Config.get("prefix", "!");
     if (message.content.startsWith(prefix)) {
-        const args: string[] = message.content.split(" ");
+        const args: Array<string> = message.content.split(" ");
         const cmd = args.shift().substr(prefix.length);
 
         CommandHandler.execute(cmd, args, message);

@@ -43,11 +43,11 @@ export class CommandHandler {
         return this.commands;
     }
 
-    public static getAllowedCommands(m: GuildMember): Command[] {
-        const allowedCommands: Command[] = [];
+    public static getAllowedCommands(m: GuildMember): Array<Command> {
+        const allowedCommands: Array<Command> = new Array<Command>();
 
         this.commands.forEach((c: Command) => {
-            const missingPermissions: PermissionResolvable[] = c.getPermissions().filter((p: PermissionResolvable) => !m.hasPermission(p));
+            const missingPermissions: Array<PermissionResolvable> = c.getPermissions().filter((p: PermissionResolvable) => !m.hasPermission(p));
             if(missingPermissions.length === 0) {
                 allowedCommands.push(c);
             }
@@ -64,11 +64,11 @@ export class CommandHandler {
     }
 
     public static async sendHelp(message: Message, command: Command = null): Promise<void> {
-        const args: any = command !== null ? [command.getName()] : [];
+        const args: any = command !== null ? [command.getName()] : new Array<any>();
         if(this.helpCommand !== null) await this.execute(this.helpCommand.getName(), args, message);
     }
 
-    public static async execute(c: string, args: string[], message: Message): Promise<void> {
+    public static async execute(c: string, args: Array<string>, message: Message): Promise<void> {
         if (!this.commands.has(c)) {
             const notFoundMessage: MessageEmbed = new MessageEmbed()
                 .setColor("#0099ff")
@@ -80,7 +80,7 @@ export class CommandHandler {
 
         const cObj: Command = this.commands.get(c);
 
-        const missingPermissions: PermissionResolvable[] = cObj.getPermissions().filter((p: PermissionResolvable) => !message.member.hasPermission(p));
+        const missingPermissions: Array<PermissionResolvable> = cObj.getPermissions().filter((p: PermissionResolvable) => !message.member.hasPermission(p));
 
         if (missingPermissions.length !== 0) {
             const errorMessage: MessageEmbed = new MessageEmbed()

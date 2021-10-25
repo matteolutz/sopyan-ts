@@ -6,14 +6,14 @@ export interface IArgument {
 }
 
 export interface IArgumentParserBlueprint {
-    args: IArgument[]
+    args: Array<IArgument>
 }
 
 export class ArgumentParser {
 
     constructor(public readonly blueprint: IArgumentParserBlueprint) {}
 
-    public parse(args: string[]): Map<string, any> | false {
+    public parse(args: Array<string>): Map<string, any> | false {
         const result: Map<string, any> = new Map<string, any>();
 
         if(args.length !== this.blueprint.args.length) {
@@ -57,12 +57,12 @@ export class ArgumentParser {
         return result;
     }
 
-    public static createAndParse(blueprint: IArgumentParserBlueprint, args: string[]): Map<string, any> | false {
+    public static createAndParse(blueprint: IArgumentParserBlueprint, args: Array<string>): Map<string, any> | false {
         const parser: ArgumentParser = new ArgumentParser(blueprint);
         return parser.parse(args);
     }
 
-    public static findFirst(blueprints: IArgumentParserBlueprint[], args: string[]): Map<string, any> | false {
+    public static findFirst(blueprints: Array<IArgumentParserBlueprint>, args: Array<string>): Map<string, any> | false {
         for(const blueprint of blueprints) {
             const result: Map<string, any> | false = ArgumentParser.createAndParse(blueprint, args);
             if(result) {

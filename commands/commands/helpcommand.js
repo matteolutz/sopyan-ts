@@ -36,7 +36,7 @@ class HelpCommand extends command_1.Command {
             else {
                 helpMessage
                     .setTitle("Help")
-                    .setDescription("Hier kommt dann noch hilfe dies das ananas 🍍")
+                    .setDescription("[WIP]")
                     .setTimestamp();
             }
             message.channel.send(helpMessage);

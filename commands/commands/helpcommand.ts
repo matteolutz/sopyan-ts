@@ -6,7 +6,7 @@ import {CommandCategory} from "../commandcategory";
 
 export class HelpCommand extends Command {
 
-    async onCommand(args: string[], message: Message): Promise<boolean> {
+    async onCommand(args: Array<string>, message: Message): Promise<boolean> {
         const helpMessage: MessageEmbed = new MessageEmbed()
             .setColor("#0099ff");
 
@@ -31,7 +31,7 @@ export class HelpCommand extends Command {
         } else {
             helpMessage
                 .setTitle("Help")
-                .setDescription("Hier kommt dann noch hilfe dies das ananas 🍍")
+                .setDescription("[WIP]")
                 .setTimestamp();
         }
 

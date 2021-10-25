@@ -43,7 +43,7 @@ class CommandHandler {
         return this.commands;
     }
     static getAllowedCommands(m) {
-        const allowedCommands = [];
+        const allowedCommands = new Array();
         this.commands.forEach((c) => {
             const missingPermissions = c.getPermissions().filter((p) => !m.hasPermission(p));
             if (missingPermissions.length === 0) {
@@ -60,7 +60,7 @@ class CommandHandler {
     }
     static sendHelp(message, command = null) {
         return __awaiter(this, void 0, void 0, function* () {
-            const args = command !== null ? [command.getName()] : [];
+            const args = command !== null ? [command.getName()] : new Array();
             if (this.helpCommand !== null)
                 yield this.execute(this.helpCommand.getName(), args, message);
         });

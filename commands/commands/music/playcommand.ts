@@ -6,8 +6,8 @@ import {MusicCommandStatus, MusicService} from "../../../services/services/music
 
 export class PlayCommand extends Command {
 
-    public async onCommand(args: string[], message: Message): Promise<boolean> {
-        MusicService.getInstance().execute(message, args[0])
+    public async onCommand(args: Array<string>, message: Message): Promise<boolean> {
+        MusicService.getInstance().execute(message, args.join(" "))
             .then((result: MusicCommandStatus) => {
                 message.channel.send(result.message);
             });

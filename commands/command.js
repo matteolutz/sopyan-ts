@@ -5,7 +5,7 @@ class Command {
     init() { }
     stop() { }
     getPermissions() {
-        return [];
+        return new Array();
     }
 }
 exports.Command = Command;

@@ -2,7 +2,7 @@ export class Config {
 
     private static f: any = null;
 
-    public static init(f: string): (any)[] {
+    public static init(f: string): Array<any> {
         try {
             this.f = require(f);
             return [true, null];

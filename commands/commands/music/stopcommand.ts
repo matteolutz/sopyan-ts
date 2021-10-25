@@ -5,7 +5,7 @@ import {MusicService} from "../../../services/services/musicservice";
 
 export class StopCommand extends Command {
 
-    public async onCommand(args: string[], message: Message): Promise<boolean> {
+    public async onCommand(args: Array<string>, message: Message): Promise<boolean> {
         message.channel.send(MusicService.getInstance().stopPlayback(message).message);
         return true;
     }

@@ -1,14 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Crypto = void 0;
-const crypto = require("crypto");
+const CryptoJS = require("crypto-js");
 class Crypto {
     static encode(decoded, key) {
-        console.log(crypto);
-        return decoded;
+        return CryptoJS.AES.encrypt(decoded, key).toString();
     }
     static decode(encoded, key) {
-        return encoded;
+        return CryptoJS.AES.decrypt(encoded, key).toString(CryptoJS.enc.Utf8);
     }
 }
 exports.Crypto = Crypto;

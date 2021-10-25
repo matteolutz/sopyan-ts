@@ -16,7 +16,7 @@ const musicservice_1 = require("../../../services/services/musicservice");
 class PlayCommand extends command_1.Command {
     onCommand(args, message) {
         return __awaiter(this, void 0, void 0, function* () {
-            musicservice_1.MusicService.getInstance().execute(message, args[0])
+            musicservice_1.MusicService.getInstance().execute(message, args.join(" "))
                 .then((result) => {
                 message.channel.send(result.message);
             });

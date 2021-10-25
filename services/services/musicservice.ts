@@ -5,7 +5,8 @@ import {
     DMChannel,
     Message,
     NewsChannel,
-    Permissions, StreamDispatcher,
+    Permissions,
+    StreamDispatcher,
     TextChannel,
     VoiceChannel,
     VoiceConnection
@@ -23,7 +24,7 @@ export type ServerQueue = {
     textChannel: TextChannel | DMChannel | NewsChannel,
     voiceChannel: VoiceChannel,
     connection: VoiceConnection,
-    songs: Song[],
+    songs: Array<Song>,
     volume: number,
     playing: boolean
 }
@@ -38,7 +39,7 @@ export class MusicService extends Service {
 
     private queue: Map<string, ServerQueue> = new Map<string, ServerQueue>();
 
-    init(client: Client) {
+    public init(client: Client): void {
         if(!MusicService.instance) {
             MusicService.instance = this;
         } else if(MusicService.instance != this) {
@@ -57,7 +58,7 @@ export class MusicService extends Service {
         });*/
     }
 
-    public stop() {
+    public stop(): void {
         MusicService.instance = null;
         this.queue.forEach((q, id) => {
            if(q.voiceChannel !== null) q.voiceChannel.leave();
@@ -90,17 +91,17 @@ export class MusicService extends Service {
                 textChannel: message.channel,
                 voiceChannel: voiceChannel,
                 connection: null,
-                songs: [],
+                songs: new Array<Song>(),
                 volume: 5,
                 playing: true,
             });
             this.queue.get(message.guild.id).songs.push(song);
 
             try {
-                const connection: VoiceConnection = await voiceChannel.join();
-                this.queue.get(message.guild.id).connection = connection;
+                this.queue.get(message.guild.id).connection = await voiceChannel.join();
                 return this.play(message.guild.id, this.queue.get(message.guild.id).songs[0]);
             } catch (err) {
+                this.queue.get(message.guild.id).connection?.disconnect();
                 this.queue.delete(message.guild.id);
                 return new MusicCommandStatus("Failed to play", true, err);
             }
@@ -132,7 +133,7 @@ export class MusicService extends Service {
         const serverQueue = this.queue.get(message.guild.id);
         if(!serverQueue) return new MusicCommandStatus("There's nothing to stop!", true);
 
-        serverQueue.songs = [];
+        serverQueue.songs = new Array<Song>();
         serverQueue.connection.dispatcher.end();
         return new MusicCommandStatus("Stopped!", false);
     }

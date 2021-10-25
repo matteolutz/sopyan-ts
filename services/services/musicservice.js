@@ -60,6 +60,7 @@ class MusicService extends service_1.Service {
         });
     }
     execute(message, url) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const voiceChannel = message.member.voice.channel;
             if (!voiceChannel) {
@@ -83,17 +84,17 @@ class MusicService extends service_1.Service {
                     textChannel: message.channel,
                     voiceChannel: voiceChannel,
                     connection: null,
-                    songs: [],
+                    songs: new Array(),
                     volume: 5,
                     playing: true,
                 });
                 this.queue.get(message.guild.id).songs.push(song);
                 try {
-                    const connection = yield voiceChannel.join();
-                    this.queue.get(message.guild.id).connection = connection;
+                    this.queue.get(message.guild.id).connection = yield voiceChannel.join();
                     return this.play(message.guild.id, this.queue.get(message.guild.id).songs[0]);
                 }
                 catch (err) {
+                    (_a = this.queue.get(message.guild.id).connection) === null || _a === void 0 ? void 0 : _a.disconnect();
                     this.queue.delete(message.guild.id);
                     return new MusicCommandStatus("Failed to play", true, err);
                 }
@@ -126,7 +127,7 @@ class MusicService extends service_1.Service {
         const serverQueue = this.queue.get(message.guild.id);
         if (!serverQueue)
             return new MusicCommandStatus("There's nothing to stop!", true);
-        serverQueue.songs = [];
+        serverQueue.songs = new Array();
         serverQueue.connection.dispatcher.end();
         return new MusicCommandStatus("Stopped!", false);
     }

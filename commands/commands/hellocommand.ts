@@ -5,7 +5,7 @@ import {CommandCategory} from "../commandcategory";
 
 export class HelloCommand extends Command {
 
-    public async onCommand(args: string[], message: Message): Promise<boolean> {
+    public async onCommand(args: Array<string>, message: Message): Promise<boolean> {
         const ping: number = Date.now() - message.createdTimestamp;
         const emojis: string = args.length !== 0 ? args.join(" ") : RandomEmoji.getRandomEmoji();
         message.channel.send(`Hello to you ${message.author.username}, ${emojis} (Ping: ${ping}ms)`);

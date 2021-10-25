@@ -4,11 +4,11 @@ import {Config} from "../../config/config";
 import {CommandCategory} from "../commandcategory";
 
 export class SettingsCommand extends Command {
-    public async onCommand(args: string[], message: Message): Promise<boolean> {
+    public async onCommand(args: Array<string>, message: Message): Promise<boolean> {
         if(args.length < 2) return false;
 
-        const [key, value]: string[] = args;
-        const possibleKeys: string[] = [
+        const [key, value]: Array<string> = args;
+        const possibleKeys: Array<string> = [
             "prefix"
         ];
 

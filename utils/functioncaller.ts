@@ -7,7 +7,7 @@ export class FunctionCaller {
     public readonly horizontal: number;
 
     constructor(input: string) {
-        const parts: string[] = input.split(":");
+        const parts: Array<string> = input.split(":");
 
         this.horizontal = parseInt(parts.pop());
         this.vertical = parseInt(parts.pop());

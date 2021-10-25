@@ -5,7 +5,7 @@ export class Config {
     private static file: string = null;
     private static json: any = null;
 
-    public static init(f: string): (any)[] {
+    public static init(f: string): Array<any> {
         this.file = f;
         try {
             return this.load();
@@ -19,7 +19,7 @@ export class Config {
         this.json = null;
     }
 
-    public static loadDefaults(defaults: any): (any)[] {
+    public static loadDefaults(defaults: any): Array<any> {
         try {
             if(this.json === null) throw "Config was not loaded. Please use load() to do that.";
 
@@ -40,7 +40,7 @@ export class Config {
         }
     }
 
-    public static load(): (any)[] {
+    public static load(): Array<any> {
         try {
             this.json = JSON.parse(fs.readFileSync(this.file).toString());
             return [true, null];
@@ -50,7 +50,7 @@ export class Config {
         }
     }
 
-    public static save(): (any)[] {
+    public static save(): Array<any> {
         try {
             fs.writeFileSync(this.file, JSON.stringify(this.json));
             return [true, null];
@@ -68,7 +68,7 @@ export class Config {
     private static getObjectByString(o: any, s: string): any {
         s = s.replace(/\[(\w+)\]/g, '.$1');
         s = s.replace(/^\./, '');
-        let a: string[] = s.split('.');
+        let a: Array<string> = s.split('.');
         for (let i: number = 0, n = a.length; i < n; ++i) {
             let k: string = a[i];
             if (k in o) {
